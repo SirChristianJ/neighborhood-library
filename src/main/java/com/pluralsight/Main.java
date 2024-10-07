@@ -6,16 +6,20 @@ public class Main {
     public static void main(String[] args) {
         char option = promptMainChoices();
         Library = GetLibrary();
-        displayBooks(Library);
+        if(option == 'A' || option == 'C')
+            displayBooks(Library,option);
+        else if (option == 'X') {
+            System.out.println("Exiting Application...");
+        }
     }
 
     public static char promptMainChoices() {
         System.out.println("Welcome to the Library! Please select one of the following choices:");
         System.out.println("\t\tshow [A]vailable books");
         System.out.println("\t\tshow [C]hecked out books");
+        System.out.println("\t\tE[x]it Library");
 
         do {
-            System.out.println("\t\tE[x]it Library");
             String command = Console.promptForString("A,C or X: ");
             if (command.equalsIgnoreCase("A")) {
                 return 'A';
@@ -31,16 +35,21 @@ public class Main {
             {
                 return 'X';
             }
+
+            else System.out.println("Invalid selection! Please try again!");
         } while (true);
     }
 
 
 
-public static void displayBooks(Book[] books){
+public static void displayBooks(Book[] books, char choice){
     System.out.printf("%5s %52s %20s %16s \n","ID","Title","ISBN","Checked Out By");
     System.out.println("------------------------------------------------------------------------------------------------");
     for(Book book: books) {
-        System.out.printf("%5s %52s %20s %16s\n" , book.getId(),book.getTitle(), book.getIsbn(),book.getCheckedOutTo());
+        if(book.isCheckedOut() && choice == 'C')
+            System.out.printf("%5s %52s %20s %20s\n" , book.getId(),book.getTitle(), book.getIsbn(),book.getCheckedOutTo());
+        if(!book.isCheckedOut() && choice == 'A')
+            System.out.printf("%5s %52s %20s\n" , book.getId(),book.getTitle(), book.getIsbn());
         //System.out.println(book.getTitle());
     }
 }
@@ -67,7 +76,9 @@ public static Book[] GetLibrary() {
     library[17] = new Book(18, "The Mythical Man-Month", "ISBN9780201835953");
     library[18] = new Book(19, "Learning JavaScript Data Structures and Algorithms", "ISBN9781785880332");
     library[19] = new Book(20, "The Elements of Programming Interviews", "ISBN9781512218237");
-    //library[1].getCheckedOutTo() = "Mario";
+    library[1].setCheckedOut("Issa me Mario");
+    library[3].setCheckedOut("Sir George Washington");
+
     return library;
 }
 }
