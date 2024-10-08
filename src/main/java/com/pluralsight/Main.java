@@ -114,10 +114,10 @@ public class Main {
         boolean choice = Console.PromptForYesNo("Would you like to check in a book ?");
 
         if (choice) {
-            String bookTitle = Console.PromptForString("Enter the available book name you wish to check in: ");
-            String user = Console.PromptForString("Enter your name: ");
+            //String bookTitle = Console.PromptForString("Enter the available book name you wish to check in: ");
+            int bookID = Integer.parseInt(Console.PromptForString("Enter the book ID: "));
             for (Book book : books) {
-                if(user.equalsIgnoreCase(book.getCheckedOutTo())){
+                if(bookID == book.getId()){
                         book.checkIn();
                 }
             }
